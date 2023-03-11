@@ -1,6 +1,6 @@
 use std::io::{self, Write};
 
-use clock::common::{format_time, Stopwatch};
+use clock::stopwatch::{format_time, Stopwatch};
 
 fn main() {
     let mut stopwatch = Stopwatch::new();
