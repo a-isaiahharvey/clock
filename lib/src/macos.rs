@@ -1,3 +1,5 @@
+//! macOS bindings
+
 #![allow(non_snake_case)]
 
 use std::ffi::{c_char, c_void, CString};

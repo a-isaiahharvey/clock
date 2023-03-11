@@ -1,3 +1,7 @@
+//! The Stopwatch module provides a stopwatch for timing code execution or
+//! other events. It allows you to start, stop, and reset the stopwatch, as
+//! well as record lap times.
+
 use std::time::{Duration, SystemTime};
 
 /// A struct representing a lap time, which includes the lap number and the time it took to complete the lap.

@@ -4,7 +4,6 @@ version = "0.1.0"
 edition = "2021"
 description = "Core logic for Clock apps"
 publish = false
-license = "MIT"
 
 [lib]
 crate-type = ["staticlib", "rlib", "cdylib"]
