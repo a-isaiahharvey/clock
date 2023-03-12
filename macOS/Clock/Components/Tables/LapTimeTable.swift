@@ -19,7 +19,7 @@ struct LapTimeTable: View {
     }
     
     var body: some View {
-        Table(laptimes) {
+        Table(laptimes.reversed()) {
             TableColumn("Lap No.", value: \LapTime.lapNumber.description)
             TableColumn("Split Time", value: \LapTime.splitTime.formatTimeString)
             TableColumn("Total Time", value: \LapTime.totalTime.formatTimeString)
