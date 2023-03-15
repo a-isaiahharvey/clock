@@ -19,7 +19,7 @@ struct StopwatchView: View {
                 queue.async {
                     while true {
                         DispatchQueue.main.async {
-                            self.elapsedTime = stopwatch.elapsedTime.formatTimeString
+                            self.elapsedTime = Stopwatch.formatTimeString(duration: stopwatch.elapsedTime)
                         }
                         Thread.sleep(forTimeInterval: 0.03)
                     }

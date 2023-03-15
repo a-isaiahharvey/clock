@@ -11,15 +11,15 @@ class LapTime: Identifiable {
     var ptr: UnsafeMutableRawPointer;
         
     var lapNumber: UInt32 {
-        stopwatch_laptime_lapNumber(ptr)
+        stopwatch_LapTime_lapNumber(ptr)
     }
     
     var splitTime: RDuration {
-        RDuration(value: stopwatch_laptime_splitTime(ptr))
+        RDuration(value: stopwatch_LapTime_splitTime(ptr))
     }
     
     var totalTime: RDuration {
-        RDuration(value: stopwatch_laptime_totalTime(ptr))
+        RDuration(value: stopwatch_LapTime_totalTime(ptr))
     }
     
     var id: UInt32 {
@@ -31,7 +31,7 @@ class LapTime: Identifiable {
     }
     
     deinit {
-        stopwatch_freeLapTime(ptr)
+        stopwatch_LapTime_free(ptr)
     }
 }
 
@@ -47,7 +47,7 @@ class LapTimeVec {
     }
     
     func get(index: Int) -> LapTime {
-        LapTime(ptr: stopwatch_laptime_getIndex(buffer, index))
+        LapTime(ptr: stopwatch_LapTime_getIndex(buffer, index))
     }
     
     func asArray() -> [LapTime] {
@@ -60,6 +60,6 @@ class LapTimeVec {
     }
     
     deinit {
-        stopwatch_stopwatch_freeLapTimes(buffer)
+        stopwatch_Stopwatch_freeLapTimes(buffer)
     }
 }

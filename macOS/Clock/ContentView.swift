@@ -6,28 +6,39 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct ContentView: View {
-    @State private var stopwatch: Stopwatch = Stopwatch()
-    @State private var elapsedTime = "00:00.0"
-    @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
+    @Binding var tabSelection: Int
     
     var body: some View {
         VStack {
-            TabView {
+            TabView(selection: $tabSelection) {
                 StopwatchView()
-                .tabItem {
-                    Text("Stopwatch")
-                }
+                    .tabItem {
+                        Text("Stopwatch")
+                    }.tag(3)
+                RTimerView().tabItem {
+                    Text("Timer")
+                }.tag(4)
             }
         }
         .padding()
+        .onAppear {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                if granted {
+                    print("Notification permission granted")
+                } else {
+                    print("Notification permission denied")
+                }
+            }
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
+    @State static var tabSelection = 3
     static var previews: some View {
-        ContentView()
+        ContentView(tabSelection: $tabSelection)
     }
 }

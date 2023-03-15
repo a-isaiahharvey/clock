@@ -8,38 +8,46 @@
 import Foundation
 
 public class Stopwatch {
-    var ptr = stopwatch_stopwatch_create()
+    var ptr: UnsafeMutableRawPointer
+    
+    init() {
+        self.ptr = stopwatch_Stopwatch_create()
+    }
     
     var isRunning: Bool {
-        stopwatch_stopwatch_isRunning(ptr)
+        stopwatch_Stopwatch_isRunning(ptr)
     }
     
     var lapTimes: LapTimeVec {
-        LapTimeVec(value: stopwatch_stopwatch_lapTimes(ptr))
+        LapTimeVec(value: stopwatch_Stopwatch_lapTimes(ptr))
     }
     
     var elapsedTime: RDuration {
-        RDuration(value: stopwatch_stopwatch_elapsedTime(ptr))
+        RDuration(value: stopwatch_Stopwatch_elapsedTime(ptr))
     }
     
     func start() {
-        stopwatch_stopwatch_start(ptr)
+        stopwatch_Stopwatch_start(ptr)
     }
     
     func stop() {
-        stopwatch_stopwatch_stop(ptr)
+        stopwatch_Stopwatch_stop(ptr)
     }
     
     func reset() {
-        stopwatch_stopwatch_reset(ptr)
+        stopwatch_Stopwatch_reset(ptr)
     }
     
     func addLap() {
-        stopwatch_stopwatch_addLap(ptr)
+        stopwatch_Stopwatch_addLap(ptr)
+    }
+    
+    static func formatTimeString(duration: RDuration) -> String {
+        String.init(cString: stopwatch_formatTime(duration.ptr))
     }
     
     deinit {
-        stopwatch_stopwatch_free(ptr)
+        stopwatch_Stopwatch_free(ptr)
     }
 }
 
