@@ -11,14 +11,18 @@ public class RDuration {
     var ptr: UnsafeMutableRawPointer;
     
     init(value: UnsafeMutableRawPointer!) {
-        ptr = value
+        self.ptr = value
     }
     
-    var formatTimeString: String {
-        String.init(cString: stopwatch_formatTime(ptr))
+    func asSecs() -> UInt64 {
+        rust_Duration_asSecs(ptr)
+    }
+    
+    func asSecs() -> Double {
+        rust_Duration_asSecsF64(ptr)
     }
     
     deinit {
-        stopwatch_freeDuration(ptr)
+        rust_Duration_free(ptr)
     }
 }

@@ -29,6 +29,175 @@ typedef struct LapTimeBuffer {
  *
  * This function dereferences a raw pointer
  */
+uint64_t rust_Duration_asSecs(void *duration);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+double rust_Duration_asSecsF64(void *duration);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void rust_Duration_free(void *duration);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+bool rust_Duration_isZero(void *duration);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void stopwatch_LapTime_free(void *laptime);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void *stopwatch_LapTime_getIndex(struct LapTimeBuffer buf, size_t index);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+uint32_t stopwatch_LapTime_lapNumber(void *laptime);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void *stopwatch_LapTime_splitTime(void *laptime);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void *stopwatch_LapTime_totalTime(void *laptime);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void stopwatch_Stopwatch_addLap(void *stopwatch);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * A constructor that creates a new Stopwatch with default values.
+ */
+void *stopwatch_Stopwatch_create(void);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void *stopwatch_Stopwatch_elapsedTime(void *stopwatch);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer and frees the object
+ */
+void stopwatch_Stopwatch_free(void *stopwatch);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void stopwatch_Stopwatch_freeLapTimes(struct LapTimeBuffer buf);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+bool stopwatch_Stopwatch_isRunning(void *stopwatch);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+struct LapTimeBuffer stopwatch_Stopwatch_lapTimes(void *stopwatch);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void stopwatch_Stopwatch_reset(void *stopwatch);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void stopwatch_Stopwatch_start(void *stopwatch);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void stopwatch_Stopwatch_stop(void *stopwatch);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
 const char *stopwatch_formatTime(void *duration);
 #endif
 
@@ -38,7 +207,7 @@ const char *stopwatch_formatTime(void *duration);
  *
  * This function dereferences a raw pointer
  */
-void stopwatch_freeDuration(void *duration);
+void *timer_Timer_create(uint64_t secs);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -47,7 +216,7 @@ void stopwatch_freeDuration(void *duration);
  *
  * This function dereferences a raw pointer
  */
-void stopwatch_freeLapTime(void *laptime);
+void *timer_Timer_duration(void *timer);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -56,59 +225,7 @@ void stopwatch_freeLapTime(void *laptime);
  *
  * This function dereferences a raw pointer
  */
-void *stopwatch_laptime_getIndex(struct LapTimeBuffer buf, size_t index);
-#endif
-
-#if defined(TARGET_OS_OSX)
-/**
- * # Safety
- *
- * This function dereferences a raw pointer
- */
-uint32_t stopwatch_laptime_lapNumber(void *laptime);
-#endif
-
-#if defined(TARGET_OS_OSX)
-/**
- * # Safety
- *
- * This function dereferences a raw pointer
- */
-void *stopwatch_laptime_splitTime(void *laptime);
-#endif
-
-#if defined(TARGET_OS_OSX)
-/**
- * # Safety
- *
- * This function dereferences a raw pointer
- */
-void *stopwatch_laptime_totalTime(void *laptime);
-#endif
-
-#if defined(TARGET_OS_OSX)
-/**
- * # Safety
- *
- * This function dereferences a raw pointer
- */
-void stopwatch_stopwatch_addLap(void *stopwatch);
-#endif
-
-#if defined(TARGET_OS_OSX)
-/**
- * A constructor that creates a new Stopwatch with default values.
- */
-void *stopwatch_stopwatch_create(void);
-#endif
-
-#if defined(TARGET_OS_OSX)
-/**
- * # Safety
- *
- * This function dereferences a raw pointer
- */
-void *stopwatch_stopwatch_elapsedTime(void *stopwatch);
+void *timer_Timer_elapsed(void *timer);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -117,7 +234,7 @@ void *stopwatch_stopwatch_elapsedTime(void *stopwatch);
  *
  * This function dereferences a raw pointer and frees the object
  */
-void stopwatch_stopwatch_free(void *stopwatch);
+void timer_Timer_free(void *timer);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -126,7 +243,7 @@ void stopwatch_stopwatch_free(void *stopwatch);
  *
  * This function dereferences a raw pointer
  */
-void stopwatch_stopwatch_freeLapTimes(struct LapTimeBuffer buf);
+bool timer_Timer_hasNotStarted(void *timer);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -135,7 +252,7 @@ void stopwatch_stopwatch_freeLapTimes(struct LapTimeBuffer buf);
  *
  * This function dereferences a raw pointer
  */
-bool stopwatch_stopwatch_isRunning(void *stopwatch);
+bool timer_Timer_isDone(void *timer);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -144,7 +261,7 @@ bool stopwatch_stopwatch_isRunning(void *stopwatch);
  *
  * This function dereferences a raw pointer
  */
-struct LapTimeBuffer stopwatch_stopwatch_lapTimes(void *stopwatch);
+bool timer_Timer_isRunning(void *timer);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -153,7 +270,7 @@ struct LapTimeBuffer stopwatch_stopwatch_lapTimes(void *stopwatch);
  *
  * This function dereferences a raw pointer
  */
-void stopwatch_stopwatch_reset(void *stopwatch);
+void *timer_Timer_remaining(void *timer);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -162,7 +279,7 @@ void stopwatch_stopwatch_reset(void *stopwatch);
  *
  * This function dereferences a raw pointer
  */
-void stopwatch_stopwatch_start(void *stopwatch);
+void timer_Timer_reset(void *timer);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -171,5 +288,14 @@ void stopwatch_stopwatch_start(void *stopwatch);
  *
  * This function dereferences a raw pointer
  */
-void stopwatch_stopwatch_stop(void *stopwatch);
+void timer_Timer_start(void *timer);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+void timer_Timer_stop(void *timer);
 #endif

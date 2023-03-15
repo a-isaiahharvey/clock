@@ -16,6 +16,8 @@
 		7E835F4529B8FA06008F3C71 /* ClockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E835F4429B8FA06008F3C71 /* ClockTests.swift */; };
 		7E835F4F29B8FA06008F3C71 /* ClockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E835F4E29B8FA06008F3C71 /* ClockUITests.swift */; };
 		7E835F5129B8FA06008F3C71 /* ClockUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E835F5029B8FA06008F3C71 /* ClockUITestsLaunchTests.swift */; };
+		7E856B1E29C0A5B7007543E3 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E856B1D29C0A5B7007543E3 /* Timer.swift */; };
+		7E856B2029C0AB2B007543E3 /* RTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E856B1F29C0AB2B007543E3 /* RTimerView.swift */; };
 		7EE71A9E29B95AE4000DA265 /* StopwatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE71A9D29B95AE4000DA265 /* StopwatchView.swift */; };
 		7EF9356D29B92D8B000B89F3 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF9356C29B92D8B000B89F3 /* Stopwatch.swift */; };
 		7EF9357129B931F0000B89F3 /* libclock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF9357029B931F0000B89F3 /* libclock.a */; };
@@ -53,6 +55,8 @@
 		7E835F4A29B8FA06008F3C71 /* ClockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E835F4E29B8FA06008F3C71 /* ClockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockUITests.swift; sourceTree = "<group>"; };
 		7E835F5029B8FA06008F3C71 /* ClockUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7E856B1D29C0A5B7007543E3 /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		7E856B1F29C0AB2B007543E3 /* RTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTimerView.swift; sourceTree = "<group>"; };
 		7EE71A9D29B95AE4000DA265 /* StopwatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchView.swift; sourceTree = "<group>"; };
 		7EF9356C29B92D8B000B89F3 /* Stopwatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		7EF9356F29B931A5000B89F3 /* libclock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libclock.a; path = Clock/Frameworks/libclock.a; sourceTree = "<group>"; };
@@ -92,6 +96,7 @@
 				7EF9356C29B92D8B000B89F3 /* Stopwatch.swift */,
 				7EF9357229B933D1000B89F3 /* RDuration.swift */,
 				7E6E833129B9C96F00978A17 /* LapTimes.swift */,
+				7E856B1D29C0A5B7007543E3 /* Timer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				7EE71A9D29B95AE4000DA265 /* StopwatchView.swift */,
+				7E856B1F29C0AB2B007543E3 /* RTimerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -328,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E856B2029C0AB2B007543E3 /* RTimerView.swift in Sources */,
 				7E835F3529B8FA04008F3C71 /* ContentView.swift in Sources */,
 				7EF9356D29B92D8B000B89F3 /* Stopwatch.swift in Sources */,
 				7E6E833229B9C96F00978A17 /* LapTimes.swift in Sources */,
@@ -335,6 +342,7 @@
 				7EF9357329B933D1000B89F3 /* RDuration.swift in Sources */,
 				7EE71A9E29B95AE4000DA265 /* StopwatchView.swift in Sources */,
 				7E835F3329B8FA04008F3C71 /* ClockApp.swift in Sources */,
+				7E856B1E29C0A5B7007543E3 /* Timer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
