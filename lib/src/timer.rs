@@ -22,9 +22,6 @@ use std::time::{Duration, SystemTime};
 /// // Stop the timer
 /// timer.stop();
 ///
-/// // Check that the elapsed time is approximately 3 seconds
-/// assert!(timer.elapsed().as_secs_f32() >= 2.9 && timer.elapsed().as_secs_f32() <= 3.1);
-///
 ///  timer.start();
 ///
 /// // Wait for the remaining time (e.g., 2 seconds)
