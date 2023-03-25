@@ -275,7 +275,7 @@ mod tests {
     use super::Timer;
 
     use std::sync::{Arc, Barrier, Mutex};
-    use std::thread;
+    use std::thread::{self, sleep};
     use std::time::Duration;
 
     #[test]
@@ -331,6 +331,7 @@ mod tests {
 
         // After starting the timer, remaining time should be less than the duration
         timer.start();
+        sleep(Duration::from_millis(50));
         assert!(timer.remaining() < duration);
 
         // After stopping the timer, remaining time should be equal to the duration minus the elapsed time
@@ -404,6 +405,7 @@ mod tests {
         let mut timer = Timer::new(duration);
         assert!(timer.has_not_started());
         timer.start();
+        sleep(Duration::from_secs(1));
         assert!(!timer.has_not_started());
         std::thread::sleep(Duration::from_secs(5));
         assert!(!timer.has_not_started());
