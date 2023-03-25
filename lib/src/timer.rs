@@ -1,6 +1,6 @@
 //! A module that defines all the core functions and structs used to create timers
 
-use std::time::{Duration, Instant};
+use std::time::{Duration, SystemTime};
 
 /// A timer that can be started, stopped, reset, and queried for its elapsed and remaining time.
 ///
@@ -33,10 +33,10 @@ use std::time::{Duration, Instant};
 /// // Check that the timer is now expired
 /// assert_eq!(timer.remaining(), Duration::from_secs(0));
 /// ```
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Timer {
-    /// An [`Instant`] representing the time when the timer was started or last resumed.
-    start_time: Instant,
+    /// An [`SystemTime`] representing the time when the timer was started or last resumed.
+    start_time: SystemTime,
     /// A [`Duration`] representing the total time that the timer has been running since it was last started or resumed.
     elapsed_time: Duration,
     /// A [`Duration`] representing the total duration of the timer.
@@ -63,7 +63,7 @@ impl Timer {
     #[must_use]
     pub fn new(duration: Duration) -> Timer {
         Timer {
-            start_time: Instant::now(),
+            start_time: SystemTime::now(),
             elapsed_time: Duration::default(),
             duration,
             is_running: false,
@@ -88,7 +88,7 @@ impl Timer {
     pub fn start(&mut self) {
         if !self.is_running {
             self.is_running = true;
-            self.start_time = Instant::now();
+            self.start_time = SystemTime::now();
         }
     }
 
@@ -114,7 +114,7 @@ impl Timer {
     /// ```
     pub fn stop(&mut self) {
         if self.is_running {
-            self.elapsed_time += self.start_time.elapsed();
+            self.elapsed_time += self.start_time.elapsed().unwrap_or_default();
             self.is_running = false;
         }
     }
@@ -140,7 +140,7 @@ impl Timer {
     /// assert_eq!(timer.remaining(), Duration::from_secs(5));
     /// ```
     pub fn reset(&mut self) {
-        self.start_time = Instant::now();
+        self.start_time = SystemTime::now();
         self.elapsed_time = Duration::default();
         self.is_running = false;
     }
@@ -189,7 +189,7 @@ impl Timer {
     pub fn elapsed(&mut self) -> Duration {
         let mut elapsed = self.elapsed_time;
         if self.is_running {
-            elapsed += self.start_time.elapsed();
+            elapsed += self.start_time.elapsed().unwrap_or_default();
         }
         elapsed
     }
@@ -222,7 +222,7 @@ impl Timer {
         let mut remaining = self.duration();
         if self.is_running {
             remaining = remaining
-                .checked_sub(self.start_time.elapsed() + self.elapsed_time)
+                .checked_sub(self.start_time.elapsed().unwrap_or_default() + self.elapsed_time)
                 .unwrap_or_default();
         } else if self.elapsed_time != Duration::from_secs(0) {
             remaining = remaining.checked_sub(self.elapsed_time).unwrap_or_default();
@@ -336,9 +336,7 @@ mod tests {
         // After stopping the timer, remaining time should be equal to the duration minus the elapsed time
         timer.stop();
         let elapsed_time = timer.elapsed();
-        let expected_remaining = duration
-            .checked_sub(elapsed_time)
-            .unwrap_or_else(|| Duration::from_secs(0));
+        let expected_remaining = duration.checked_sub(elapsed_time).unwrap_or_default();
         assert_eq!(timer.remaining(), expected_remaining);
 
         // After resetting the timer, remaining time should equal the duration again

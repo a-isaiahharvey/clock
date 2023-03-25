@@ -18,7 +18,13 @@
  * A buffer that stores `LapTime` values for a stopwatch.
  */
 typedef struct LapTimeBuffer {
+  /**
+   * A pointer to the data stored in the buffer.
+   */
   const void *data;
+  /**
+   * The length of the buffer.
+   */
   size_t len;
 } LapTimeBuffer;
 #endif
@@ -29,7 +35,7 @@ typedef struct LapTimeBuffer {
  *
  * This function dereferences a raw pointer
  */
-uint64_t rust_Duration_asSecs(void *duration);
+uint64_t rust_Duration_asSecs(const void *duration);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -38,7 +44,16 @@ uint64_t rust_Duration_asSecs(void *duration);
  *
  * This function dereferences a raw pointer
  */
-double rust_Duration_asSecsF64(void *duration);
+double rust_Duration_asSecsF64(const void *duration);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+bool rust_Duration_eq(const void *duration, const void *other);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -56,7 +71,7 @@ void rust_Duration_free(void *duration);
  *
  * This function dereferences a raw pointer
  */
-bool rust_Duration_isZero(void *duration);
+bool rust_Duration_isZero(const void *duration);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -83,7 +98,7 @@ void *stopwatch_LapTime_getIndex(struct LapTimeBuffer buf, size_t index);
  *
  * This function dereferences a raw pointer
  */
-uint32_t stopwatch_LapTime_lapNumber(void *laptime);
+size_t stopwatch_LapTime_lapNumber(void *laptime);
 #endif
 
 #if defined(TARGET_OS_OSX)
@@ -226,6 +241,15 @@ void *timer_Timer_duration(void *timer);
  * This function dereferences a raw pointer
  */
 void *timer_Timer_elapsed(void *timer);
+#endif
+
+#if defined(TARGET_OS_OSX)
+/**
+ * # Safety
+ *
+ * This function dereferences a raw pointer
+ */
+bool timer_Timer_eq(void *timer, void *other);
 #endif
 
 #if defined(TARGET_OS_OSX)

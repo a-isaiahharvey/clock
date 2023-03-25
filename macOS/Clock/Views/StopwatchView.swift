@@ -8,64 +8,56 @@
 import SwiftUI
 
 struct StopwatchView: View {
-    @State private var stopwatch: Stopwatch = Stopwatch()
-    @State private var elapsedTime = "00:00.00"
-    @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
-    var body: some View {
-        VStack {
-            Text(elapsedTime).font(.system(size: 100)).fontWeight(.light).monospacedDigit().onAppear {
-                let queue = DispatchQueue(label: "updateStringQueue")
-                queue.async {
-                    while true {
-                        DispatchQueue.main.async {
-                            self.elapsedTime = Stopwatch.formatTimeString(duration: stopwatch.elapsedTime)
-                        }
-                        Thread.sleep(forTimeInterval: 0.03)
-                    }
-                }
+  @State private var stopwatch: Stopwatch = Stopwatch()
+  @State private var elapsedTime = "00:00.00"
+  @SceneStorage("StopwatchView.isRunning") private var isRunning: Bool = false
+  @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+  
+  var body: some View {
+    VStack {
+      Text(elapsedTime).font(.system(size: 100)).fontWeight(.light).monospacedDigit().onAppear {
+        let queue = DispatchQueue(label: "updateStringQueue")
+        queue.async {
+          while true {
+            DispatchQueue.main.async {
+              self.elapsedTime = Stopwatch.formatTimeString(duration: stopwatch.elapsedTime)
+              self.isRunning = stopwatch.isRunning
             }
-            
-            LapTimeTable(laptimes: stopwatch.lapTimes)
-            
-            
-            HStack(content: {
-                if stopwatch.isRunning {
-                    Button(action: {
-                        stopwatch.addLap()
-                    }) {
-                        Text("Lap").padding()
-                    }
-                    Button(action: {
-                        stopwatch.stop()
-                    }) {
-                        Text("Stop").padding()
-                    }
-                } else {
-                    if elapsedTime != "00:00.00" {
-                        Button(action: {
-                            stopwatch.reset()
-                        }) {
-                            Text("Reset").padding()
-                        }
-                    }
-                    
-                    Button(action: {
-                        stopwatch.start()
-                    }) {
-                        Text("Start").padding()
-                    }
-                }
-                
-                
-            })
+            Thread.sleep(forTimeInterval: 0.03)
+          }
         }
-        .padding()
+      }
+      
+      LapTimeTable(laptimes: stopwatch.lapTimes)
+      
+      HStack {
+        if isRunning {
+          Button(action: stopwatch.addLap) {
+            Text("Lap").padding()
+          }
+          Button(action: stopwatch.stop) {
+            Text("Stop").padding()
+          }
+        } else {
+          if elapsedTime != "00:00.00" {
+            Button(action: stopwatch.reset) {
+              Text("Reset").padding()
+            }
+          }
+          
+          Button(action: stopwatch.start) {
+            Text("Start").padding()
+          }
+        }
+        
+      }
     }
+    .padding()
+  }
 }
 
 struct StopwatchView_Previews: PreviewProvider {
-    static var previews: some View {
-        StopwatchView()
-    }
+  static var previews: some View {
+    StopwatchView()
+  }
 }

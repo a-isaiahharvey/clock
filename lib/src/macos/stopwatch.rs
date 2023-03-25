@@ -5,15 +5,16 @@ use crate::stopwatch::{self, format_time, LapTime, Stopwatch};
 /// A buffer that stores `LapTime` values for a stopwatch.
 #[repr(C)]
 pub struct LapTimeBuffer {
+    /// A pointer to the data stored in the buffer.
     data: *const c_void,
+    /// The length of the buffer.
     len: usize,
 }
 
 /// A constructor that creates a new Stopwatch with default values.
 #[no_mangle]
 pub extern "C" fn stopwatch_Stopwatch_create() -> *mut c_void {
-    let stopwatch = Stopwatch::new();
-    Box::into_raw(Box::new(stopwatch)).cast::<std::ffi::c_void>()
+    Box::into_raw(Box::new(Stopwatch::new())).cast::<std::ffi::c_void>()
 }
 
 /// # Safety
@@ -29,7 +30,7 @@ pub unsafe extern "C" fn stopwatch_Stopwatch_free(stopwatch: *mut c_void) {
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn stopwatch_Stopwatch_start(stopwatch: *mut c_void) {
-    (*stopwatch.cast::<stopwatch::Stopwatch>()).start();
+    (*stopwatch.cast::<Stopwatch>()).start();
 }
 
 /// # Safety
@@ -37,7 +38,7 @@ pub unsafe extern "C" fn stopwatch_Stopwatch_start(stopwatch: *mut c_void) {
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn stopwatch_Stopwatch_stop(stopwatch: *mut c_void) {
-    (*stopwatch.cast::<stopwatch::Stopwatch>()).stop();
+    (*stopwatch.cast::<Stopwatch>()).stop();
 }
 
 /// # Safety
@@ -45,7 +46,7 @@ pub unsafe extern "C" fn stopwatch_Stopwatch_stop(stopwatch: *mut c_void) {
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn stopwatch_Stopwatch_reset(stopwatch: *mut c_void) {
-    (*stopwatch.cast::<stopwatch::Stopwatch>()).reset();
+    (*stopwatch.cast::<Stopwatch>()).reset();
 }
 
 /// # Safety
@@ -69,7 +70,7 @@ pub unsafe extern "C" fn stopwatch_Stopwatch_isRunning(stopwatch: *mut c_void) -
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn stopwatch_Stopwatch_elapsedTime(stopwatch: *mut c_void) -> *mut c_void {
-    let duration = (*stopwatch.cast::<stopwatch::Stopwatch>()).elapsed_time();
+    let duration = (*stopwatch.cast::<Stopwatch>()).elapsed_time();
 
     Box::into_raw(Box::new(duration)).cast::<std::ffi::c_void>()
 }
@@ -79,12 +80,9 @@ pub unsafe extern "C" fn stopwatch_Stopwatch_elapsedTime(stopwatch: *mut c_void)
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn stopwatch_Stopwatch_lapTimes(stopwatch: *mut c_void) -> LapTimeBuffer {
-    let buf = (*stopwatch.cast::<stopwatch::Stopwatch>()).lap_times();
+    let buf = (*stopwatch.cast::<Stopwatch>()).lap_times();
     let len = buf.len();
-    let data = buf
-        .as_ptr()
-        .cast::<stopwatch::LapTime>()
-        .cast::<std::ffi::c_void>();
+    let data = buf.as_ptr().cast::<std::ffi::c_void>();
     LapTimeBuffer { data, len }
 }
 
@@ -116,7 +114,7 @@ pub unsafe extern "C" fn stopwatch_LapTime_getIndex(
 ///
 /// This function dereferences a raw pointer
 #[no_mangle]
-pub unsafe extern "C" fn stopwatch_LapTime_lapNumber(laptime: *mut c_void) -> u32 {
+pub unsafe extern "C" fn stopwatch_LapTime_lapNumber(laptime: *mut c_void) -> usize {
     (*laptime.cast::<stopwatch::LapTime>()).lap_number()
 }
 

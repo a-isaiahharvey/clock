@@ -8,7 +8,7 @@ use std::time::{Duration, SystemTime};
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
 pub struct LapTime {
-    lap_number: u32,
+    lap_number: usize,
     split_time: Duration,
     total_time: Duration,
 }
@@ -24,7 +24,7 @@ impl LapTime {
     /// # Returns
     /// A `LapTime` struct containing the provided lap data.
     #[must_use]
-    pub fn new(lap_number: u32, split_time: Duration, total_time: Duration) -> Self {
+    pub fn new(lap_number: usize, split_time: Duration, total_time: Duration) -> Self {
         Self {
             lap_number,
             split_time,
@@ -34,7 +34,7 @@ impl LapTime {
 
     /// A `u32` representing the lap number.
     #[must_use]
-    pub fn lap_number(&self) -> u32 {
+    pub fn lap_number(&self) -> usize {
         self.lap_number
     }
 
@@ -137,12 +137,11 @@ impl Stopwatch {
     }
 
     /// Adds a lap time to the stopwatch.
-    #[allow(clippy::cast_possible_truncation)]
     pub fn add_lap(&mut self) {
         let now = SystemTime::now();
         if self.running {
             let lap_time = LapTime {
-                lap_number: self.lap_times.len() as u32 + 1,
+                lap_number: self.lap_times.len() + 1,
                 split_time: if let Ok(duration) = now.duration_since(self.split_start_time) {
                     duration
                 } else {

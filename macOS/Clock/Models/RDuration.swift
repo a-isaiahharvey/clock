@@ -7,22 +7,26 @@
 
 import Foundation
 
-public class RDuration {
-    var ptr: UnsafeMutableRawPointer;
+public class RDuration : Equatable {
+  public static func == (lhs: RDuration, rhs: RDuration) -> Bool {
+      rust_Duration_eq(lhs.ptr, rhs.ptr)
+  }
     
-    init(value: UnsafeMutableRawPointer!) {
-        self.ptr = value
-    }
-    
-    func asSecs() -> UInt64 {
-        rust_Duration_asSecs(ptr)
-    }
-    
-    func asSecs() -> Double {
-        rust_Duration_asSecsF64(ptr)
-    }
-    
-    deinit {
-        rust_Duration_free(ptr)
-    }
+  var ptr: UnsafeMutableRawPointer
+
+  init(value: UnsafeMutableRawPointer!) {
+    self.ptr = value
+  }
+
+  func asSecs() -> UInt64 {
+    rust_Duration_asSecs(ptr)
+  }
+
+  func asSecs() -> Double {
+    rust_Duration_asSecsF64(ptr)
+  }
+
+  deinit {
+    rust_Duration_free(ptr)
+  }
 }

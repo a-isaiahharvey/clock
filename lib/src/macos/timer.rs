@@ -1,4 +1,4 @@
-use std::{ffi::c_void, mem::ManuallyDrop, time::Duration};
+use std::{ffi::c_void, time::Duration};
 
 use crate::timer::{self, Timer};
 
@@ -8,7 +8,7 @@ use crate::timer::{self, Timer};
 #[no_mangle]
 pub extern "C" fn timer_Timer_create(secs: u64) -> *mut c_void {
     let timer = Timer::new(Duration::from_secs(secs));
-    Box::into_raw(Box::new(ManuallyDrop::new(timer))).cast::<std::ffi::c_void>()
+    Box::into_raw(Box::new(timer)).cast::<std::ffi::c_void>()
 }
 
 /// # Safety
@@ -16,7 +16,7 @@ pub extern "C" fn timer_Timer_create(secs: u64) -> *mut c_void {
 /// This function dereferences a raw pointer and frees the object
 #[no_mangle]
 pub unsafe extern "C" fn timer_Timer_free(timer: *mut c_void) {
-    drop(Box::from_raw(timer.cast::<ManuallyDrop<timer::Timer>>()));
+    drop(Box::from_raw(timer.cast::<timer::Timer>()));
 }
 
 /// # Safety
@@ -24,7 +24,7 @@ pub unsafe extern "C" fn timer_Timer_free(timer: *mut c_void) {
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn timer_Timer_start(timer: *mut c_void) {
-    (*timer.cast::<ManuallyDrop<timer::Timer>>()).start();
+    (*timer.cast::<timer::Timer>()).start();
 }
 
 /// # Safety
@@ -32,7 +32,7 @@ pub unsafe extern "C" fn timer_Timer_start(timer: *mut c_void) {
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn timer_Timer_stop(timer: *mut c_void) {
-    (*timer.cast::<ManuallyDrop<timer::Timer>>()).stop();
+    (*timer.cast::<timer::Timer>()).stop();
 }
 
 /// # Safety
@@ -40,7 +40,7 @@ pub unsafe extern "C" fn timer_Timer_stop(timer: *mut c_void) {
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn timer_Timer_reset(timer: *mut c_void) {
-    (*timer.cast::<ManuallyDrop<timer::Timer>>()).reset();
+    (*timer.cast::<timer::Timer>()).reset();
 }
 
 /// # Safety
@@ -48,7 +48,7 @@ pub unsafe extern "C" fn timer_Timer_reset(timer: *mut c_void) {
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn timer_Timer_elapsed(timer: *mut c_void) -> *mut c_void {
-    let duration = (*timer.cast::<ManuallyDrop<timer::Timer>>()).elapsed();
+    let duration = (*timer.cast::<timer::Timer>()).elapsed();
     Box::into_raw(Box::new(duration)).cast::<std::ffi::c_void>()
 }
 
@@ -57,7 +57,7 @@ pub unsafe extern "C" fn timer_Timer_elapsed(timer: *mut c_void) -> *mut c_void 
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn timer_Timer_remaining(timer: *mut c_void) -> *mut c_void {
-    let duration = (*timer.cast::<ManuallyDrop<timer::Timer>>()).remaining();
+    let duration = (*timer.cast::<timer::Timer>()).remaining();
     Box::into_raw(Box::new(duration)).cast::<std::ffi::c_void>()
 }
 
@@ -66,7 +66,7 @@ pub unsafe extern "C" fn timer_Timer_remaining(timer: *mut c_void) -> *mut c_voi
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn timer_Timer_duration(timer: *mut c_void) -> *mut c_void {
-    let duration = (*timer.cast::<ManuallyDrop<timer::Timer>>()).duration();
+    let duration = (*timer.cast::<timer::Timer>()).duration();
     Box::into_raw(Box::new(duration)).cast::<std::ffi::c_void>()
 }
 
@@ -75,7 +75,7 @@ pub unsafe extern "C" fn timer_Timer_duration(timer: *mut c_void) -> *mut c_void
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn timer_Timer_isRunning(timer: *mut c_void) -> bool {
-    (*timer.cast::<ManuallyDrop<timer::Timer>>()).is_running()
+    (*timer.cast::<timer::Timer>()).is_running()
 }
 
 /// # Safety
@@ -83,7 +83,7 @@ pub unsafe extern "C" fn timer_Timer_isRunning(timer: *mut c_void) -> bool {
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn timer_Timer_isDone(timer: *mut c_void) -> bool {
-    (*timer.cast::<ManuallyDrop<timer::Timer>>()).is_done()
+    (*timer.cast::<timer::Timer>()).is_done()
 }
 
 /// # Safety
@@ -91,5 +91,14 @@ pub unsafe extern "C" fn timer_Timer_isDone(timer: *mut c_void) -> bool {
 /// This function dereferences a raw pointer
 #[no_mangle]
 pub unsafe extern "C" fn timer_Timer_hasNotStarted(timer: *mut c_void) -> bool {
-    (*timer.cast::<ManuallyDrop<timer::Timer>>()).has_not_started()
+    (*timer.cast::<timer::Timer>()).has_not_started()
+}
+
+/// # Safety
+///
+/// This function dereferences a raw pointer
+#[no_mangle]
+pub unsafe extern "C" fn timer_Timer_eq(timer: *mut c_void, other: *mut c_void) -> bool {
+    let other = *other.cast::<timer::Timer>();
+    (*timer.cast::<timer::Timer>()).eq(&other)
 }
